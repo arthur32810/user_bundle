@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+Gestion de mon compte - {{parent()}}
+{% endblock title %}
+
+{% block body %}
+<h1 class="text-center">Gestion de mon compte utilisateur</h1>
+
+<section class="container">
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{path('artdevelopp_user.admin-manage-user')}}"> <i class="fas fa-arrow-circle-left"></i>
+        Retour à la gestion des utilisateurs
+    </a>
+    {% endif %}
+
+    {% include "@artdevelopp_user_bundle/messageTemplate/flashBag.html.twig" %}
+
+    <p> <i class="fas fa-envelope-open"></i> Email : {{user.email}}</p>
+    <p> <i class="fas fa-user"></i> Nom d'utilisateur : {{user.username}}</p>
+    <p> <i class="fas fa-user-tag"></i> Droit sur le site :
+    <ul>
+        {% for role in user.roles %}
+        <li> {{role}}</li>
+        {% endfor %}
+    </ul>
+    </p>
+    {% if is_granted('ROLE_ADMIN') %}
+    <p> <i class="fas fa-user-check"></i> Utilisateur activé : {{user.userActivated}} </p>
+    {% endif %}
+
+    <a href="{{path('artdevelopp_user.update-user', {'userId':user.id })}}" class="btn btn-primary button-color-site">
+        Modifier mon compte</a>
+
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"> Supprimer mon compte
+    </button>
+
+    <!-- Création d'une modal pour la suppression -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delereModalLabel"> Êtes vous sûr de vouloir supprimer votre compte ?
+                    </h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Annuler </button>
+                    <a href="{{path('artdevelopp_user.delete-user', {'userId': user.id})}}" class="btn btn-danger">
+                        Supprimer
+                        mon compte</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+{% endblock body %}

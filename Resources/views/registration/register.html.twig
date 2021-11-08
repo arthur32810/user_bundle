@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Inscription - {{parent()}}
+{% endblock %}
+
+{% block body %}
+<h1 class="text-center"> Bienvenue sur GascogneFM !</h1>
+
+<div class="container">
+    <p>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{path('artdevelopp_user.admin-manage-user')}}"> <i class="fas fa-arrow-circle-left"></i>
+            Retour à la gestion des utilisateurs
+        </a>
+        {% else %}
+        <a href="{{path('artdevelopp_user.login')}}"> <i class="fas fa-arrow-circle-left"></i>
+            Retour à la page de connexion
+        </a>
+        {% endif %}
+    </p>
+    {{form(form)}}
+</div>
+{% endblock %}

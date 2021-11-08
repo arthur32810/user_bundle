@@ -1,0 +1,28 @@
+{
+    "name": "artdevelopp/user-bundle",
+    "description": "Bundle apportant la gestion des utilisateurs",
+    "keywords": [
+        "User management"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arthur Robert",
+            "email": "arthur@artdevelopp.fr"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "symfony/form": "^5.3.0",
+        "symfony/framework-bundle": "^5.3.0",
+        "symfony/security-bundle": "^5.3.0",
+        "symfony/templating": "5.3.0",
+        "symfony/twig-bundle": "^5.3.0",
+        "symfony/validator": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArtDevelopp\\UserBundle\\": ""
+        }
+    }
+}

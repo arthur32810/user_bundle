@@ -1,0 +1,14 @@
+{% for label, messages in app.flashes(['success', 'danger', 'warning']) %}
+    {% for message in messages %}
+    <div class="alert alert-{{label}}">
+        {% if label == 'danger'%}
+            <i class="fas fa-exclamation-circle"></i>
+        {% elseif label == 'success'%}
+            <i class="fas fa-check-circle"></i>
+        {% elseif label == 'warning'%}
+            <i class="fas fa-exclamation-triangle"></i>
+        {% endif %}
+        {{ message }} <br />
+    </div>
+    {% endfor %}
+{% endfor %}

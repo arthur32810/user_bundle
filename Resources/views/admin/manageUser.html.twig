@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Gestion des utilisateurs - {{parent()}}
+{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Gestion des utilisateurs</h1>
+
+<section class="container">
+
+    {% include "@artdevelopp_user_bundle/messageTemplate/flashBag.html.twig" %}
+
+    <form action="{{path('artdevelopp_user.admin-manage-user')}}" method="post">
+        <div class="form-group">
+            <label for="users"> Sélectionner l'utilisateur</label>
+            <select class="form-control" name="users" id="users">
+                {% for user in users %}
+                <option value="{{user.id}}"> {{user.username }} - {{user.email}} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="button" name="viewUser" class="btn  btn-success ">
+            <a href="{{path('artdevelopp_user.new')}}" class="text-white"> Ajouter un utilisateur </a></button>
+
+        <input type="submit" name="viewUser" value="Voir les informations de l'utilisateur"
+            class="btn button-color-site btn-primary ">
+
+        <input type="submit" name="updateUser" value="Mettre à jour" class="btn btn-primary">
+
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"> Supprimer
+            l'utilisateur </button>
+
+        <!-- Création d'une modal pour la suppression -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delereModalLabel"> Êtes vous sûr de vouloir supprimer
+                            l'utilisateur
+                            ! </h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Annuler </button>
+                        <input type="submit" name="deleteUser" value="Supprimer" class="btn btn-danger">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</section>
+{% endblock %}

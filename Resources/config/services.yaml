@@ -1,0 +1,13 @@
+services:
+    _defaults:
+      autowire: true
+      autoconfigure: true
+
+    ArtDevelopp\UserBundle\:
+      resource: '../../*'
+      exclude:
+        - '../../DependencyInjection/'
+        - '../../Resources/'
+        - '../../Tests/'
+
+    ArtDevelopp\UserBundle\Service\WithParameterService: ['%user_bundle.my_var_string%']

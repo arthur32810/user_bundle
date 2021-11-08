@@ -141,4 +141,4 @@ app_logout:
 Les Routes du bundle
 ---
 
-Voir fichier [0-Docs/Routes_bundle.md](https://github.com/arthur32810/user_bundle/blob/main/0-Docs/Routes_bundle.md "test")
+Voir [0-Docs/Routes_bundle.md](https://github.com/arthur32810/user_bundle/blob/main/0-Docs/Routes_bundle.md "test")

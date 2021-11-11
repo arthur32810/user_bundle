@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nouvelle inscription</title>
 </head>
+
 <body>
     <h1> Activation de votre compte</h1>
     <p> Vous avez créé un compte sur notre site, veuillez cliquer sur le lien ci-dessous pour l'activer</p>
-    <p><a href="{{absolute_url(path('user_bundle.activation', {'token': token})) }}" target="_blank">Activer mon compte</a></p>
+    <p><a href="{{absolute_url(path('user_bundle.activation', {'token': token})) }}" target="_blank">Activer mon
+            compte</a></p>
 </body>
+
 </html>

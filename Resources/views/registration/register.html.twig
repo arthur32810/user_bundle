@@ -1,12 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends '@ArtdeveloppUser/layout.html.twig' %}
 
-{% block title %}
-Inscription - {{parent()}}
+{% block artdevelopp_user_title %}
+Inscription
 {% endblock %}
 
-{% block body %}
-<h1 class="text-center"> Bienvenue sur GascogneFM !</h1>
-
+{% block artdevelopp_user_content %}
 <div class="container">
     <p>
         {% if is_granted('ROLE_ADMIN') %}

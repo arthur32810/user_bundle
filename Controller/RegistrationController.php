@@ -19,6 +19,7 @@ class RegistrationController extends AbstractController
      */
     public function registrationUser(Request $request, UserPasswordHasherInterface $passwordHasher, \Swift_Mailer $mailer): Response
     {
+        //Si l'enregistrement de nouvel user n'est pas permis alors on met une erreur sauf si user admin
         if (!($this->getParameter('user_bundle.user_register')) && !($this->isGranted($this->getParameter('user_bundle.role_admin')))) {
             throw $this->createNotFoundException('La fonctionnalité d\'enregistrement n\'est pas ouverte.');
         }
@@ -31,11 +32,14 @@ class RegistrationController extends AbstractController
         // 2) gestion de l'envoie
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             // 3) Encodage du mot de passe
             $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
+            //Envoi d'un mail si défini
             if ($this->getParameter('user_bundle.confirm_email')) {
+
                 // Génération d'un token si confirmation email utilisé
                 $user->setUserActivated(false);
                 $user->setActivationToken(md5(uniqid()));
@@ -45,7 +49,7 @@ class RegistrationController extends AbstractController
                     ->setTo($user->getEmail())
                     ->setBody(
                         $this->renderView(
-                            '@artdevelopp_user_bundle/emails/activation.html.twig',
+                            '@ArtdeveloppUser/emails/activation.html.twig',
                             ['token' => $user->getActivationToken()]
                         ),
                         'text/html'
@@ -75,7 +79,7 @@ class RegistrationController extends AbstractController
         }
 
 
-        return $this->renderForm('@artdevelopp_user_bundle/registration/register.html.twig',  [
+        return $this->renderForm('@ArtdeveloppUser/registration/register.html.twig',  [
             'form' => $form,
         ]);
     }

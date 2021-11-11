@@ -11,22 +11,16 @@ Pré-requis
     composer require symfony/security-bundle
     ```
 
-* Ajouter bootstrapp à son fichier **base.html.twig**
-
+* Les Templates du bundle utilisent Bootstrap v4.3
+* 
 Ajouter le bundle à son projet
 -
 
-1- Télécharger ce repository dans le dossier de votre choix, il est recommandé de le mettre dans le dossier **/lib** à la racine de votre projet
-
-2- Ajouter cette ligne dans le fichier **composer.json** à la section **"autoload"** : 
-```
- "ArtDevelopp\\UserBundle\\": "lib/artdevelopp/user-bundle"
-```
-3- Ajouter cette ligne à la fin de votre fichier **"config/bundles.php"** : 
+1- Exécuter la commande **composer require artdevelopp/user-bundle**
+2- Ajouter cette ligne à la fin de votre fichier **"config/bundles.php"** : 
 ```
 ArtDevelopp\UserBundle\ArtdeveloppUserBundle::class => ['all' => true],
 ```
-
 
 Mettre en place les paramétres
 -

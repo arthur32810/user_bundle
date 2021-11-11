@@ -26,6 +26,7 @@ class DeleteUser extends AbstractController
         $doctrine = $this->getDoctrine();
         $entityManager = $doctrine->getManager();
 
+        //Si l'utilisateur n'est pas administrateur ou que ce n'est pas son id
         if (!($this->isGranted($this->getParameter('user_bundle.role_admin')))) {
             if (!($user->getId() == $userId)) {
                 throw $this->createNotFoundException("Impossible d'accéder à la ressource demandée");
@@ -44,7 +45,7 @@ class DeleteUser extends AbstractController
 
         if ($this->isGranted($this->getParameter('user_bundle.role_admin'))) {
             $this->addFlash('success', "L'utilisateur à bien été supprimé !");
-            return $this->redirectToRoute('user_bundle.admin-manage-user');
+            return $this->redirectToRoute('artdevelopp_user.admin-manage-user');
         }
 
 

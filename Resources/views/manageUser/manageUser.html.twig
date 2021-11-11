@@ -1,10 +1,10 @@
-{% extends "base.html.twig" %}
+{% extends "@ArtdeveloppUser/layout.html.twig" %}
 
-{% block title %}
-Gestion de mon compte - {{parent()}}
-{% endblock title %}
+{% block artdevelopp_user_title %}
+Gestion de mon compte
+{% endblock %}
 
-{% block body %}
+{% block artdevelopp_user_content %}
 <h1 class="text-center">Gestion de mon compte utilisateur</h1>
 
 <section class="container">
@@ -14,7 +14,7 @@ Gestion de mon compte - {{parent()}}
     </a>
     {% endif %}
 
-    {% include "@artdevelopp_user_bundle/messageTemplate/flashBag.html.twig" %}
+    {% include "@ArtdeveloppUser/messageTemplate/flashBag.html.twig" %}
 
     <p> <i class="fas fa-envelope-open"></i> Email : {{user.email}}</p>
     <p> <i class="fas fa-user"></i> Nom d'utilisateur : {{user.username}}</p>
@@ -58,4 +58,4 @@ Gestion de mon compte - {{parent()}}
 </section>
 
 
-{% endblock body %}
+{% endblock %}

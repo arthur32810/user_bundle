@@ -32,7 +32,7 @@ class ManageUser extends AbstractController
             $user = $doctrine->getRepository($this->getParameter('user_bundle.user_class'))->findOneById($userId);
         }
 
-        return $this->render('@artdevelopp_user_bundle/manageUser/manageUser.html.twig', [
+        return $this->render('@ArtdeveloppUser/manageUser/manageUser.html.twig', [
             'user' => $user,
         ]);
     }

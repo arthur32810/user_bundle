@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class ArtdeveloppUserExtension extends Extension implements PrependExtensionInterface
+class ArtdeveloppUserExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -26,13 +26,6 @@ class ArtdeveloppUserExtension extends Extension implements PrependExtensionInte
         $container->setParameter('user_bundle.role_admin', $config['role_admin']);
         $container->setParameter('user_bundle.reset_role', $config['reset_role']);
         $container->setParameter('user_bundle.default_role', $config['default_role']);
-    }
-
-    public function prepend(ContainerBuilder $container)
-    {
-        $twigConfig = [];
-        $twigConfig['paths'][__DIR__ . '/../Resources/views'] = "artdevelopp_user_bundle";
-        $container->prependExtensionConfig('twig', $twigConfig);
     }
 
     public function getAlias()

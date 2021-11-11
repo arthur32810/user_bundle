@@ -62,9 +62,9 @@ class UpdateUser extends AbstractController
                 'Vous avez bien modifié votre compte utilisateur'
             );
 
-            return $this->redirectToRoute('user_bundle.manage-user', ['userId' => $user->getId()]);
+            return $this->redirectToRoute('artdevelopp_user.manage-user', ['userId' => $user->getId()]);
         }
 
-        return $this->renderForm('@artdevelopp_user_bundle/updateUser/updateUser.html.twig', ['form' => $form, 'userId' => $userId]);
+        return $this->renderForm('@ArtdeveloppUser/updateUser/updateUser.html.twig', ['form' => $form, 'userId' => $userId]);
     }
 }

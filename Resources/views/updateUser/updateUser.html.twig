@@ -1,10 +1,10 @@
-{% extends "base.html.twig" %}
+{% extends "@ArtdeveloppUser/layout.html.twig" %}
 
-{% block title %}
-Modifier mon compte - {{parent()}}
-{% endblock title %}
+{% block artdevelopp_user_title %}
+Modifier mon compte
+{% endblock %}
 
-{% block body %}
+{% block artdevelopp_user_content %}
 <h1 class="text-center"> Modifier mon compte </h1>
 
 <div class="container">
@@ -19,8 +19,8 @@ Modifier mon compte - {{parent()}}
         {% endif %}
     </p>
 
-    {% include "@artdevelopp_user_bundle/messageTemplate/flashBag.html.twig" %}
+    {% include "@ArtdeveloppUser/messageTemplate/flashBag.html.twig" %}
 
     {{form(form)}}
 </div>
-{% endblock body %}
+{% endblock %}

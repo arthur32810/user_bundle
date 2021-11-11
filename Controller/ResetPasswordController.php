@@ -38,7 +38,7 @@ class ResetPasswordController extends AbstractController
                 //erreur adresse mail inconnu
                 $this->addFlash('danger', 'Cette adresse email est inconnue');
 
-                return $this->redirectToRoute('artdevelopp_user_login');
+                return $this->redirectToRoute('artdevelopp_user.login');
             }
 
             //On génére un token 
@@ -64,7 +64,7 @@ class ResetPasswordController extends AbstractController
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
-                        '@artdevelopp_user_bundle/emails/resetPassword.html.twig',
+                        '@ArtdeveloppUser/emails/resetPassword.html.twig',
                         ['urlResetPassword' => $url]
                     ),
                     'text/html'
@@ -74,11 +74,11 @@ class ResetPasswordController extends AbstractController
 
             $this->addFlash('success', 'Un mail contenant un lien de réinitalisation de votre mot de passe vous a été envoyé !');
 
-            return $this->redirectToRoute('artdevelopp_user_login');
+            return $this->redirectToRoute('artdevelopp_user.login');
         }
 
         //On envoie le formulaire à la vue 
-        return $this->renderForm('@artdevelopp_user_bundle/security/forget_password.html.twig', ['emailForm' => $form]);
+        return $this->renderForm('@ArtdeveloppUser/resetPassword/forget_password.html.twig', ['emailForm' => $form]);
     }
 
     /**
@@ -92,7 +92,7 @@ class ResetPasswordController extends AbstractController
 
         if ($user == null) {
             $this->addFlash('danger', 'Token iconnu');
-            return $this->redirectToRoute('artdevelopp_user_login');
+            return $this->redirectToRoute('artdevelopp_user.login');
         }
 
         if ($request->isMethod('POST')) {
@@ -114,9 +114,9 @@ class ResetPasswordController extends AbstractController
                 'Mot de passe mis à jour'
             );
 
-            return $this->redirectToRoute('artdevelopp_user_login');
+            return $this->redirectToRoute('artdevelopp_user.login');
         }
 
-        return $this->render('@artdevelopp_user_bundle/security/reset_password.html.twig', ['token' => $token]);
+        return $this->render('@ArtdeveloppUser/resetPassword/reset_password.html.twig', ['token' => $token]);
     }
 }

@@ -108,6 +108,6 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Utilisateur activé avec succès');
 
         //retour page connexion 
-        return $this->redirectToRoute('artdevelopp_user_login');
+        return $this->redirectToRoute('artdevelopp_user.login');
     }
 }

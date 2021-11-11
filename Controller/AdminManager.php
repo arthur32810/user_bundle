@@ -55,7 +55,7 @@ class AdminManager extends AbstractController
             }
         }
 
-        return $this->render('@artdevelopp_user_bundle/admin/manageUser.html.twig', [
+        return $this->render('@ArtdeveloppUser/admin/manageUser.html.twig', [
             'users' => $users
         ]);
     }

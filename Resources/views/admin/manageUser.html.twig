@@ -1,15 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends '@ArtdeveloppUser/layout.html.twig' %}
 
-{% block title %}
-Gestion des utilisateurs - {{parent()}}
+{% block artdevelopp_user_title %}
+Gestion des utilisateurs
 {% endblock %}
 
-{% block body %}
+{% block artdevelopp_user_content %}
 <h1 class="text-center">Gestion des utilisateurs</h1>
 
 <section class="container">
 
-    {% include "@artdevelopp_user_bundle/messageTemplate/flashBag.html.twig" %}
+    {% include "@ArtdeveloppUser/messageTemplate/flashBag.html.twig" %}
 
     <form action="{{path('artdevelopp_user.admin-manage-user')}}" method="post">
         <div class="form-group">

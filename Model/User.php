@@ -59,6 +59,11 @@ trait User
      */
     private $reset_token;
 
+    /**
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $registrationDate;
+
 
     // other properties and methods
 
@@ -66,6 +71,7 @@ trait User
     {
 
         $this->roles = ['ROLE_USER'];
+        $this->registrationDate = new \DateTime();
     }
 
     public function getId(): ?int
@@ -205,6 +211,24 @@ trait User
     public function setResetToken($reset_token): self
     {
         $this->reset_token = $reset_token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of registrationDate
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * Set the value of registrationDate
+     */
+    public function setRegistrationDate($registrationDate): self
+    {
+        $this->registrationDate = $registrationDate;
 
         return $this;
     }

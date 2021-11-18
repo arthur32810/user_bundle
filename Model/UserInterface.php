@@ -29,4 +29,7 @@ interface UserInterface extends UserUserInterface
 
     public function getResetToken(): ?string;
     public function setResetToken(string $reset_token): self;
+
+    public function getRegistrationDate();
+    public function setRegistrationDate($registrationDate): self;
 }

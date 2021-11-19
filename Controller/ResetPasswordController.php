@@ -3,8 +3,10 @@
 namespace ArtDevelopp\UserBundle\Controller;
 
 use ArtDevelopp\UserBundle\Form\Type\ResetPassType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -18,7 +20,7 @@ class ResetPasswordController extends AbstractController
     /**
      * @Route("/mot-de-passe-oublie", name="artdevelopp_user.forget_password")
      */
-    public function forgetPassword(Request $request, TokenGeneratorInterface $tokenGenerator, \Swift_Mailer $mailer)
+    public function forgetPassword(Request $request, TokenGeneratorInterface $tokenGenerator, MailerInterface $mailer)
     {
         //initialisation formulaire
         $form = $this->createForm(ResetPassType::class);
@@ -59,18 +61,14 @@ class ResetPasswordController extends AbstractController
             $url = $this->generateUrl('artdevelopp_user.reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
             //Génération email 
-            $message = (new \Swift_Message('Mot de passe oublié'))
-                ->setFrom($this->getParameter('user_bundle.mail_sender_address'))
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        '@ArtdeveloppUser/emails/resetPassword.html.twig',
-                        ['urlResetPassword' => $url]
-                    ),
-                    'text/html'
-                );
+            $email = (new TemplatedEmail())
+                ->from($this->getParameter('user_bundle.mail_sender_address'))
+                ->to($user->getEmail())
+                ->subject('Mot de passe perdu')
+                ->htmlTemplate('@ArtdeveloppUser/emails/resetPassword.html.twig')
+                ->context(['urlResetPassword' => $url]);
 
-            $mailer->send($message);
+            $mailer->send($email);
 
             $this->addFlash('success', 'Un mail contenant un lien de réinitalisation de votre mot de passe vous a été envoyé !');
 

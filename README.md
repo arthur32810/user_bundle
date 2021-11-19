@@ -61,12 +61,15 @@ namespace App\Entity;
 use ArtDevelopp\UserBundle\Model\User as ModelUser;
 use ArtDevelopp\UserBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 
 /**
  * @ORM\Table(name="user")
  * @ORM\Entity 
+ * @UniqueEntity("email")
+ * @UniqueEntity("username")
  */
 class User implements UserInterface
 {

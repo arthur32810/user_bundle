@@ -39,13 +39,26 @@ class RegistrationController extends AbstractController
             $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            //Envoi d'un mail si défini
+            //Génération token si confirmation user par mail
             if ($this->getParameter('user_bundle.confirm_email')) {
 
                 // Génération d'un token si confirmation email utilisé
                 $user->setUserActivated(false);
                 $user->setActivationToken(md5(uniqid()));
 
+                $userToken = $user->getActivationToken();
+            } else {
+                $user->setUserActivated(true);
+            }
+
+            //4) Save the user 
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+
+            //Envoi mail si token user 
+            if ($userToken) {
                 $email = (new TemplatedEmail())
                     ->from($this->getParameter('user_bundle.mail_sender_address'))
                     ->to($user->getEmail())
@@ -57,15 +70,7 @@ class RegistrationController extends AbstractController
 
 
                 $mailer->send($email);
-            } else {
-                $user->setUserActivated(true);
             }
-
-
-            //4) Save the user 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
 
             if ($this->getParameter('user_bundle.confirm_email')) {
                 $this->addFlash('success', 'Veuillez activer votre compte, via le lien reçu par mail avant de vous connecter');

@@ -43,6 +43,10 @@ artdevelopp_user:
     default_role: ROLE_USER #role par défaut ROLE_USER
 ```
 
+Configurer les mails
+-
+
+Le bundle utilise Symfony Mailer pour l'envoi de mail, regarder la documentation pour le configurer sur votre projet : <https://symfony.com/doc/current/mailer.html#transport-setup>
 
 Créer entity User
 --

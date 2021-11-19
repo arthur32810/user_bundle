@@ -3,9 +3,11 @@
 namespace ArtDevelopp\UserBundle\Controller;
 
 use ArtDevelopp\UserBundle\Form\Type\UserType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,7 +19,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/new", name="artdevelopp_user.new")
      */
-    public function registrationUser(Request $request, UserPasswordHasherInterface $passwordHasher, \Swift_Mailer $mailer): Response
+    public function registrationUser(Request $request, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer): Response
     {
         //Si l'enregistrement de nouvel user n'est pas permis alors on met une erreur sauf si user admin
         if (!($this->getParameter('user_bundle.user_register')) && !($this->isGranted($this->getParameter('user_bundle.role_admin')))) {
@@ -44,18 +46,17 @@ class RegistrationController extends AbstractController
                 $user->setUserActivated(false);
                 $user->setActivationToken(md5(uniqid()));
 
-                $message = (new \Swift_Message('Nouveau compte'))
-                    ->setFrom($this->getParameter('user_bundle.mail_sender_address'))
-                    ->setTo($user->getEmail())
-                    ->setBody(
-                        $this->renderView(
-                            '@ArtdeveloppUser/emails/activation.html.twig',
-                            ['token' => $user->getActivationToken()]
-                        ),
-                        'text/html'
-                    );
+                $email = (new TemplatedEmail())
+                    ->from($this->getParameter('user_bundle.mail_sender_address'))
+                    ->to($user->getEmail())
+                    ->subject('Confirmation de la création de votre compte')
+                    ->htmlTemplate('@ArtdeveloppUser/emails/activation.html.twig')
+                    ->context([
+                        'token' => $user->getActivationToken()
+                    ]);
 
-                $mailer->send($message);
+
+                $mailer->send($email);
             } else {
                 $user->setUserActivated(true);
             }

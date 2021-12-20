@@ -38,8 +38,6 @@ class UserType extends AbstractType
                 'second_options' => ['label' => 'Confirmer le mot de passe']
             ]);
         if ($this->security->isGranted($this->params->get('user_bundle.role_admin'))) {
-
-
             $builder->add('roles', RolesUserType::class);
         }
         $builder->add('save', SubmitType::class, ['label' => "S'inscrire"]);

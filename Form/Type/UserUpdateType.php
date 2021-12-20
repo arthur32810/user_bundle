@@ -39,17 +39,7 @@ class UserUpdateType extends AbstractType
                 'second_options' => ['label' => 'Confirmer le mot de passe']
             ]);
         if ($this->security->isGranted($this->params->get('user_bundle.role_admin'))) {
-            $arrayRoles = [];
-
-            foreach ($this->params->get('security.role_hierarchy.roles') as $keyRole => $role) {
-                $arrayRoles += [$keyRole => $keyRole];
-            }
-
-
-            $builder->add('roles', ChoiceType::class, [
-                'choices' => $arrayRoles,
-                'multiple' => 'true'
-            ]);
+            $builder->add('roles', RolesUserType::class);
         }
         $builder->add('save', SubmitType::class, ['label' => "Mettre à jour"]);
     }

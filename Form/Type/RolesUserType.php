@@ -2,12 +2,18 @@
 
 namespace ArtDevelopp\UserBundle\Form\Type;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RolesUserType extends AbstractType
 {
+    public function __construct(
+        private ContainerBagInterface $params,
+    ) {
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         //Récupération des rôles

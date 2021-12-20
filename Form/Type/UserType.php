@@ -38,7 +38,7 @@ class UserType extends AbstractType
                 'second_options' => ['label' => 'Confirmer le mot de passe']
             ]);
         if ($this->security->isGranted($this->params->get('user_bundle.role_admin'))) {
-            $arrayRoles = [];
+
 
             $builder->add('roles', RolesUserType::class);
         }

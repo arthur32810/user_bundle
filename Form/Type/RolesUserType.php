@@ -12,6 +12,7 @@ class RolesUserType extends AbstractType
     {
         //Récupération des rôles
         foreach ($this->params->get('security.role_hierarchy.roles') as $keyRole => $role) {
+            $arrayRoles = [];
             $arrayRoles += [$keyRole => $keyRole];
         }
 

@@ -28,7 +28,7 @@ class ArtdeveloppUserExtension extends Extension
         $container->setParameter('user_bundle.default_role', $config['default_role']);
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return parent::getAlias();
     }

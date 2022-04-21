@@ -135,7 +135,7 @@ class RegistrationController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Utilisateur activé avec succès');
+        $this->addFlash('success', 'Votre compte vient d\'être activé avec succès');
 
         //retour page connexion 
         return $this->redirectToRoute('artdevelopp_user.login');

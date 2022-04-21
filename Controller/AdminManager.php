@@ -2,6 +2,7 @@
 
 namespace ArtDevelopp\UserBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminManager extends AbstractController
 {
+    public function __construct(private ManagerRegistry $doctrine)
+    {
+    }
     /**
      * @Route("/manage", name="artdevelopp_user.admin-manage-user")
      */
@@ -22,7 +26,7 @@ class AdminManager extends AbstractController
             throw $this->createNotFoundException("La ressource demandée n'existe pas");
         }
 
-        $doctrine = $this->getDoctrine();
+        $doctrine = $this->doctrine;
         $userRepository = $doctrine->getRepository($this->getParameter('user_bundle.user_class'));
         $users = $userRepository->findBy([], ['username' => 'ASC']);
 

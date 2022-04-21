@@ -2,6 +2,7 @@
 
 namespace ArtDevelopp\UserBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class DeleteUser extends AbstractController
 {
+    public function __construct(private ManagerRegistry $doctrine)
+    {
+    }
 
     /**
      * @Route("/delete/{userId}", name="artdevelopp_user.delete-user")
@@ -23,7 +27,7 @@ class DeleteUser extends AbstractController
         //suppression de l'utilisateur
         $user = $this->getUser();
 
-        $doctrine = $this->getDoctrine();
+        $doctrine = $this->doctrine;
         $entityManager = $doctrine->getManager();
 
         //Si l'utilisateur n'est pas administrateur ou que ce n'est pas son id

@@ -3,6 +3,7 @@
 namespace ArtDevelopp\UserBundle\Controller;
 
 use ArtDevelopp\UserBundle\Form\Type\ResetPassType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,9 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
  */
 class ResetPasswordController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $doctrine)
+    {
+    }
     /**
      * @Route("/mot-de-passe-oublie", name="artdevelopp_user.forget_password")
      */
@@ -34,7 +38,7 @@ class ResetPasswordController extends AbstractController
             $donnees = $form->getData();
 
             //On cherche si un utilisateur existe avec l'email 
-            $user = $this->getDoctrine()->getRepository($this->getParameter('user_bundle.user_class'))->findOneByEmail($donnees['email']);
+            $user = $this->doctrine->getRepository($this->getParameter('user_bundle.user_class'))->findOneByEmail($donnees['email']);
 
             if ($user == null) {
                 //erreur adresse mail inconnu
@@ -49,7 +53,7 @@ class ResetPasswordController extends AbstractController
             //On essaie d'envoyer le token en base de donnée
             try {
                 $user->setResetToken($token);
-                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager = $this->doctrine->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
             } catch (\Exception $e) {
@@ -86,7 +90,7 @@ class ResetPasswordController extends AbstractController
     {
 
         //on cherche l'utilisateur via le token 
-        $user = $this->getDoctrine()->getRepository($this->getParameter('user_bundle.user_class'))->findOneBy(['reset_token' => $token]);
+        $user = $this->doctrine->getRepository($this->getParameter('user_bundle.user_class'))->findOneBy(['reset_token' => $token]);
 
         if ($user == null) {
             $this->addFlash('danger', 'Token iconnu');
@@ -103,7 +107,7 @@ class ResetPasswordController extends AbstractController
                 $user->setRoles([$this->getParameter('user_bundle.default_role')]);
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 

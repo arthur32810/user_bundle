@@ -60,7 +60,7 @@ trait User
     private $reset_token;
 
     /**
-     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime")
      */
     private $registrationDate;
 

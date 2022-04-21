@@ -3,6 +3,7 @@
 namespace ArtDevelopp\UserBundle\Controller;
 
 use ArtDevelopp\UserBundle\Form\Type\UserType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RegistrationController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $doctrine)
+    {
+    }
     /**
      * @Route("/new", name="artdevelopp_user.new")
      */
@@ -39,6 +43,9 @@ class RegistrationController extends AbstractController
             $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
+            //enregsitrement de la date d'enregistrement
+            $user->setRegistrationDate(new \DateTime());
+
             //Génération token si confirmation user par mail
             if ($this->getParameter('user_bundle.confirm_email')) {
 
@@ -52,7 +59,7 @@ class RegistrationController extends AbstractController
             }
 
             //4) Save the user 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -81,7 +88,12 @@ class RegistrationController extends AbstractController
                 );
             }
 
-            return $this->redirectToRoute('artdevelopp_user.login');
+            //Redirection vers page d'accueil ou menu user si administrateur
+            if ($this->isGranted($this->getParameter('user_bundle.role_admin'))) {
+                return $this->redirectToRoute('artdevelopp_user.admin-manage-user');
+            } else {
+                return $this->redirectToRoute('artdevelopp_user.login');
+            }
         }
 
 
@@ -96,7 +108,7 @@ class RegistrationController extends AbstractController
     public function activation($token)
     {
         //Récupération doctrine
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->doctrine->getManager();
 
         //Recherche si user avec token existe
         $user = $entityManager->getRepository($this->getParameter('user_bundle.user_class'))->findOneBy(['activation_token' => $token]);

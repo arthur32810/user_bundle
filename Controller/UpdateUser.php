@@ -3,6 +3,7 @@
 namespace ArtDevelopp\UserBundle\Controller;
 
 use ArtDevelopp\UserBundle\Form\Type\UserUpdateType;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class UpdateUser extends AbstractController
 {
 
+    public function __construct(private ManagerRegistry $doctrine)
+    {
+    }
     /**
      * @Route("/update/{userId}", name="artdevelopp_user.update-user")
      */
@@ -31,7 +35,7 @@ class UpdateUser extends AbstractController
             }
         }
 
-        $doctrine = $this->getDoctrine();
+        $doctrine = $this->doctrine;
         //Modification si admin 
         if ($this->isGranted($this->getParameter('user_bundle.role_admin'))) {
             $user = $doctrine->getRepository($this->getParameter('user_bundle.user_class'))->findOneById($userId);

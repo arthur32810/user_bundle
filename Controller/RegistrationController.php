@@ -79,13 +79,25 @@ class RegistrationController extends AbstractController
                 $mailer->send($email);
             }
 
-            if ($this->getParameter('user_bundle.confirm_email')) {
-                $this->addFlash('success', 'Veuillez activer votre compte, via le lien reçu par mail avant de vous connecter');
+            if ($this->isGranted($this->getParameter('user_bundle.role_admin'))) {
+
+                if ($this->getParameter('user_bundle.confirm_email')) {
+                    $this->addFlash('success', "L'utilisateur a été créé, il doit maintenant activer son compte via le lien reçu par mail");
+                } else {
+                    $this->addFlash(
+                        'success',
+                        'L\'Utilisateur a bien été créé, il peut se connecter dès maintenant'
+                    );
+                }
             } else {
-                $this->addFlash(
-                    'success',
-                    'Utilisateur créé, vous pouvez vous connecter dès maintenant'
-                );
+                if ($this->getParameter('user_bundle.confirm_email')) {
+                    $this->addFlash('success', 'Veuillez activer votre compte, via le lien reçu par mail avant de vous connecter');
+                } else {
+                    $this->addFlash(
+                        'success',
+                        'Utilisateur créé, vous pouvez vous connecter dès maintenant'
+                    );
+                }
             }
 
             //Redirection vers page d'accueil ou menu user si administrateur

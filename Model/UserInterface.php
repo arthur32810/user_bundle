@@ -18,7 +18,7 @@ interface UserInterface extends UserUserInterface
     public function getPassword(): ?string;
     public function setPassword(string $password): self;
 
-    public function getRoles(): ?array;
+    public function getRoles(): array;
     public function setRoles(array $roles): self;
 
     public function getUserActivated(): ?bool;

@@ -94,7 +94,7 @@ Effectuer la migration BDD de l'entitée mise en place
 
 Configurer Password Hashers
 ---
-Dans le fichier **confi/packages/security.yaml** configurer le password_hachers comme ceci:
+Dans le fichier **config/packages/security.yaml** configurer le password_hachers comme ceci:
 
 ```
 password_hashers:

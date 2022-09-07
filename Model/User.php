@@ -2,67 +2,52 @@
 
 namespace ArtDevelopp\UserBundle\Model;
 
+use DateTime;
+use DateTimeInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait User
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    private $email;
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank()]
+    #[Assert\Email()]
+    private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $username;
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank()]
+    private ?string $username = null;
 
-    /**
-     * @Assert\Length(max=4096)
-     */
-    private $plainPassword;
+    #[Assert\Length(max: 4096)]
+    private ?string $plainPassword = null;
 
     /**
      * The below length depends on the "algorithm" you use for encoding
      * the password, but this works well with bcrypt.
-     *
-     * @ORM\Column(type="string")
      */
-    private $password;
+    #[ORM\Column()]
+    private ?string $password = null;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $roles;
+    #[ORM\Column()]
+    private ?array $roles = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $user_activated;
+    #[ORM\Column()]
+    private ?bool $user_activated = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $activation_token;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $activation_token = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $reset_token;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reset_token = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $registrationDate;
+    #[ORM\Column()]
+    private ?DateTimeInterface $registrationDate = null;
 
 
     // other properties and methods

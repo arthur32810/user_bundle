@@ -51,7 +51,9 @@ Le bundle utilise Symfony Mailer pour l'envoi de mail, regarder la documentation
 
 Créer entity User
 --
-Ajouter ce code dans le fichier src/Entity/User.php
+Simuler la création d'une entity User sans définir d'attribut, ce qui aura pour but de créer les deux fichier Entity et Repository.
+
+Remplacer le code du fichier User.php, contenu dans le dossier Entity par ce qui suit : 
 
 ```
 <?php
@@ -59,24 +61,27 @@ Ajouter ce code dans le fichier src/Entity/User.php
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
+
 use ArtDevelopp\UserBundle\Model\User as ModelUser;
 use ArtDevelopp\UserBundle\Model\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-/**
- * @ORM\Table(name="user")
- * @ORM\Entity 
- * @UniqueEntity("email")
- * @UniqueEntity("username")
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity('email')]
+#[UniqueEntity('username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use ModelUser;
 
-    public function getUserIdentifier(): ?string
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    public function getUserIdentifier(): string
     {
 
         return $this->email; //Modifier l'attribut si besoin email ou username

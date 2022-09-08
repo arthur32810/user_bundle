@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
             $user->setPassword($password);
 
             //enregsitrement de la date d'enregistrement
-            $user->setRegistrationDate(new \DateTime());
+            $user->setRegistrationDate(new \DateTime('now'));
 
             //Génération token si confirmation user par mail
             if ($this->getParameter('user_bundle.confirm_email')) {

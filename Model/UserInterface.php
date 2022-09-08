@@ -31,5 +31,5 @@ interface UserInterface extends UserUserInterface
     public function setResetToken(string $reset_token): self;
 
     public function getRegistrationDate();
-    public function setRegistrationDate($registrationDate): self;
+    public function setRegistrationDate(\DateTimeInterface $registrationDate): self;
 }

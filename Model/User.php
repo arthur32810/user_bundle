@@ -4,6 +4,7 @@ namespace ArtDevelopp\UserBundle\Model;
 
 use DateTime;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -46,7 +47,7 @@ trait User
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reset_token = null;
 
-    #[ORM\Column()]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?DateTimeInterface $registrationDate = null;
 
 

@@ -41,7 +41,7 @@ class RegistrationUserCommand extends Command
         $password = $input->getArgument('password');
 
         if ($input->getArgument('role')) {
-            $role = $input->getArgument('role');
+            $role = [$input->getArgument('role')];
         } else {
             $role = [$this->params->get("user_bundle.default_role")];
         }

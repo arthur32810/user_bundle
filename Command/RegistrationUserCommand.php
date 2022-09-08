@@ -30,7 +30,7 @@ class RegistrationUserCommand extends Command
             ->addArgument('email', InputArgument::REQUIRED, 'email de l\'utilisateur')
             ->addArgument('username', InputArgument::REQUIRED, 'nom d\'utilisateur')
             ->addArgument('password', InputArgument::REQUIRED, 'mot de passe')
-            ->addArgument('role', InputArgument::OPTIONAL, 'Role à definir, le role sera ajouté de cette façon ROLE_[votreRole]');
+            ->addArgument('role', InputArgument::OPTIONAL, 'Role à definir sous la forme ROLE_[votreRole]');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -41,7 +41,7 @@ class RegistrationUserCommand extends Command
         $password = $input->getArgument('password');
 
         if ($input->getArgument('role')) {
-            $role = ['ROLE_' . $input->getArgument('role')];
+            $role = $input->getArgument('role');
         } else {
             $role = [$this->params->get("user_bundle.default_role")];
         }

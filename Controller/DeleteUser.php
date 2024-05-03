@@ -10,18 +10,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * @Route("/user")
  * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
+#[Route(path: '/user')]
 class DeleteUser extends AbstractController
 {
     public function __construct(private ManagerRegistry $doctrine)
     {
     }
 
-    /**
-     * @Route("/delete/{userId}", name="artdevelopp_user.delete-user")
-     */
+    #[Route(path: '/delete/{userId}', name: 'artdevelopp_user.delete-user')]
     public function deleteUser(TokenStorageInterface $token, int $userId)
     {
         //suppression de l'utilisateur

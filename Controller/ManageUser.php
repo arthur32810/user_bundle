@@ -8,17 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/manage")
  * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
+#[Route(path: '/user/manage')]
 class ManageUser extends AbstractController
 {
     public function __construct(private ManagerRegistry $doctrine)
     {
     }
-    /**
-     * @Route("/{userId}", name="artdevelopp_user.manage-user")
-     */
+    #[Route(path: '/{userId}', name: 'artdevelopp_user.manage-user')]
     public function manageUser(int $userId)
     {
         //Récupération de l'user 

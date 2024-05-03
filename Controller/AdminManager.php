@@ -9,17 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/admin")
  * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
+#[Route(path: '/user/admin')]
 class AdminManager extends AbstractController
 {
     public function __construct(private ManagerRegistry $doctrine)
     {
     }
-    /**
-     * @Route("/manage", name="artdevelopp_user.admin-manage-user")
-     */
+    #[Route(path: '/manage', name: 'artdevelopp_user.admin-manage-user')]
     public function adminManageUser(Request $request)
     {
         if (!$this->isGranted($this->getParameter('user_bundle.role_admin'))) {

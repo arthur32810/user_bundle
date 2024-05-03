@@ -12,17 +12,13 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user")
- */
+#[Route(path: '/user')]
 class RegistrationController extends AbstractController
 {
     public function __construct(private ManagerRegistry $doctrine)
     {
     }
-    /**
-     * @Route("/new", name="artdevelopp_user.new")
-     */
+    #[Route(path: '/new', name: 'artdevelopp_user.new')]
     public function registrationUser(Request $request, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer): Response
     {
         //Si l'enregistrement de nouvel user n'est pas permis alors on met une erreur sauf si user admin
@@ -114,9 +110,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/activation/{token}", name="artdevelopp_user.activation")
-     */
+    #[Route(path: '/activation/{token}', name: 'artdevelopp_user.activation')]
     public function activation($token)
     {
         //Récupération doctrine

@@ -13,17 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
-/**
- * @Route("/user")
- */
+#[Route(path: '/user')]
 class ResetPasswordController extends AbstractController
 {
     public function __construct(private ManagerRegistry $doctrine)
     {
     }
-    /**
-     * @Route("/mot-de-passe-oublie", name="artdevelopp_user.forget_password")
-     */
+    #[Route(path: '/mot-de-passe-oublie', name: 'artdevelopp_user.forget_password')]
     public function forgetPassword(Request $request, TokenGeneratorInterface $tokenGenerator, MailerInterface $mailer)
     {
         //initialisation formulaire
@@ -83,9 +79,7 @@ class ResetPasswordController extends AbstractController
         return $this->renderForm('@ArtdeveloppUser/resetPassword/forget_password.html.twig', ['emailForm' => $form]);
     }
 
-    /**
-     * @Route("/reinitialisation-mot-de-passe/{token}", name="artdevelopp_user.reset_password")
-     */
+    #[Route(path: '/reinitialisation-mot-de-passe/{token}', name: 'artdevelopp_user.reset_password')]
     public function resetPassword(Request $request, string $token, UserPasswordHasherInterface $userPasswordHasher)
     {
 

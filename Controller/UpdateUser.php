@@ -12,18 +12,16 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user")
  * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
+#[Route(path: '/user')]
 class UpdateUser extends AbstractController
 {
 
     public function __construct(private ManagerRegistry $doctrine)
     {
     }
-    /**
-     * @Route("/update/{userId}", name="artdevelopp_user.update-user")
-     */
+    #[Route(path: '/update/{userId}', name: 'artdevelopp_user.update-user')]
     public function updateUser(Request $request, int $userId, UserPasswordHasherInterface $userPasswordHasher)
     {
         //Récupération de l'user

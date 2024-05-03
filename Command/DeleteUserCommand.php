@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class DeleteUserCommand extends Command 
+class DeleteUserCommand extends Command
 {
     protected static $defaultName = "user_bundle:delete-user";
     protected static $defaultDescription = "Suppression d'un user";
@@ -19,8 +19,7 @@ class DeleteUserCommand extends Command
         private UserExistCommand $userExistCommand,
         private EntityManagerInterface $manager,
         private ParameterBagInterface $params
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -31,7 +30,7 @@ class DeleteUserCommand extends Command
             ->addArgument("username", InputArgument::REQUIRED, "nom d'utilisateur");
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         //Récupération paramétre 
         $email = $input->getArgument('email');
@@ -40,7 +39,7 @@ class DeleteUserCommand extends Command
         //Récupération de l'user 
         $user = $this->userExistCommand->userExist($email, $username, $output);
 
-        if(!$user){
+        if (!$user) {
             return Command::FAILURE;
         }
 
@@ -48,7 +47,7 @@ class DeleteUserCommand extends Command
         $this->manager->remove($user);
         $this->manager->flush();
 
-        $output->writeln("L'utilisateur ".$username." à bien été supprimé !");
+        $output->writeln("L'utilisateur " . $username . " à bien été supprimé !");
 
         return Command::SUCCESS;
     }

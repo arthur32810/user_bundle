@@ -21,23 +21,20 @@ class ResetPasswordCommand extends Command
         private UserPasswordHasherInterface $passwordHasher,
         private EntityManagerInterface $manager,
         private ParameterBagInterface $params,
-    )
-    {
+    ) {
         parent::__construct();
-        
     }
 
-    public function configure():void 
+    public function configure(): void
     {
         $this
-            ->addArgument('email', InputArgument::REQUIRED,"email de l'utilisateur")
+            ->addArgument('email', InputArgument::REQUIRED, "email de l'utilisateur")
             ->addArgument('username', InputArgument::REQUIRED, "nom d'utilisateur")
             ->addArgument("password", InputArgument::REQUIRED, "nouveau mot de passe")
-            ->addArgument("reset_role", InputArgument::OPTIONAL, "réinitialiser les roles de l'utilisateur")
-        ;
+            ->addArgument("reset_role", InputArgument::OPTIONAL, "réinitialiser les roles de l'utilisateur");
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         //Récupération des paramétres
         $email = $input->getArgument('email');
@@ -48,15 +45,14 @@ class ResetPasswordCommand extends Command
         //Récupération de l'user
         $user = $this->userExistCommand->UserExist($email, $username, $output);
 
-        if(!$user)
-        {
+        if (!$user) {
             return Command::FAILURE;
         }
         //Modification du mot de passe
         $user->setPassword($this->passwordHasher->hashPassword($user, $password));
 
         //Si reset role on remet le role par defaut 
-        if($this->params->get('user_bundle.reset_role')){
+        if ($this->params->get('user_bundle.reset_role')) {
             $user->setRoles([$this->params->get('user_bundle.default_role')]);
         }
 
@@ -66,10 +62,10 @@ class ResetPasswordCommand extends Command
 
         $output->writeln("Le mot de passe utilisateur a bien été changé !");
 
-        if($this->params->get("user_bundle.reset_role")){
+        if ($this->params->get("user_bundle.reset_role")) {
             $output->writeln("Les roles de l'utilisateur ont été remis par défaut");
         }
-        
+
         return Command::SUCCESS;
     }
 }

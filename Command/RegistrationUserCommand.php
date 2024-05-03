@@ -33,7 +33,7 @@ class RegistrationUserCommand extends Command
             ->addArgument('role', InputArgument::OPTIONAL, 'Role à definir sous la forme ROLE_[votreRole]');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         //Récupération paramétre
         $email = $input->getArgument('email');

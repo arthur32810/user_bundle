@@ -8,16 +8,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserChecker implements UserCheckerInterface
 {
-    public function checkPreAuth(UserInterface $user)
+    public function checkPreAuth(UserInterface $user): void
     {
-        if(!$user->getUserActivated()){
-            throw new CustomUserMessageAccountStatusException('Votre compte utilisateur n\'est pas actif !') ;
+        if (!$user->getUserActivated()) {
+            throw new CustomUserMessageAccountStatusException('Votre compte utilisateur n\'est pas actif !');
         }
-        
     }
 
-    public function checkPostAuth(UserInterface $user)
+    public function checkPostAuth(UserInterface $user): void
     {
-        
     }
 }

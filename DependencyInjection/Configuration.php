@@ -2,12 +2,12 @@
 
 namespace ArtDevelopp\UserBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class Configuration implements ConfigurationInterface
 {
-    function getConfigTreeBuilder()
+    function getConfigTreeBuilder(): TreeBuilder
     {
         $builder = new TreeBuilder('user_bundle');
 

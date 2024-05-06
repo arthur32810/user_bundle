@@ -24,7 +24,7 @@ class DeleteUserCommand extends Command
         parent::__construct();
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this
             ->addArgument('email', InputArgument::REQUIRED, "email de l'utilisateur")

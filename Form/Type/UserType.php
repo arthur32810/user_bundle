@@ -24,7 +24,7 @@ class UserType extends AbstractType
     ) {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
         $builder->add('email', EmailType::class)
@@ -43,7 +43,7 @@ class UserType extends AbstractType
         $builder->add('save', SubmitType::class, ['label' => "S'inscrire"]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => $this->params->get('user_bundle.user_class')

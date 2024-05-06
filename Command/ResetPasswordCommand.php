@@ -4,6 +4,7 @@ namespace ArtDevelopp\UserBundle\Command;
 
 use ArtDevelopp\UserBundle\Service\UserExistCommand;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,9 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+#[AsCommand(name: "user_bundle:reset-password")]
 class ResetPasswordCommand extends Command
 {
-    protected static $defaultName = "user_bundle:reset-password";
     protected static $defaultDescription = "Modification du mot de passe utilisateur";
 
     public function __construct(

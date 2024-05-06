@@ -4,6 +4,7 @@ namespace ArtDevelopp\UserBundle\Command;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,9 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+#[AsCommand(name: "user_bundle:add-user")]
 class RegistrationUserCommand extends Command
 {
-    protected static $defaultName = "user_bundle:add-user";
     protected static $defaultDescription = "Cette commande permet d\'ajouter un utilisateur";
 
     public function __construct(
